@@ -11,11 +11,12 @@ app.get("/", (req, res) => {
 // allow us to get the data in request.body
 app.use(express.json({ extended: false })); 
 // Define Routes
-app.use("/api/register", require("./routes/api/register"));
+app.use("/user/register", require("./routes/api/register"));
 connectDB();
-app.use("/api/auth", require("./routes/api/auth"));
+app.use("/user/auth", require("./routes/api/auth"));
 app.use(cookieParser());
-app.get('/api/logOut', function(req, res) {
+app.get('/user/logOut', function(req, res) {
     return res.clearCookie('User').end();
 });
+app.use('/board', require("./routes/api/board"));
 app.listen(port, () => console.log(`Server started on port ${port}`));

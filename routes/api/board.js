@@ -13,6 +13,7 @@ router.post(
 		writer: req.body.token,
 		title: req.body.title,	
 		content: req.body.content,
+		category: req.body.category,
 		boardToken: randomString.generate(12), // 랜덤한 문자열 12자리 생성
 	});
 
@@ -41,7 +42,7 @@ router.get(
 		let user = await User.findOne({ token: board.writer }); // 작성자 이름을 얻기 위해, 토큰으로 검색
 		return res.status(200).json({ data: { ...board._doc, writerName: user.name } });
 	}
-	return res.status(500).json({ message: 'Notice Not Found' });
+	return res.status(500).json({ message: 'Board Not Found' });
 });
 
 // 글 삭제
@@ -68,4 +69,33 @@ router.post(
 	else return res.status(500).json({ message: 'Delete Fail!' });
 });
 
+// 글 검색
+router.get('/search/:keyword', async (req, res) => {
+	let result = await Board.find({ title: {$regex: req.params.keyword } });
+	return res.status(200).json({ data: result });
+});
+
+// 카테고리 조회
+router.get('/get/:category', async (req, res) => {
+	let list = await Board.find({ category: req.params.category }); // 카테고리 리스트 불러오기.
+	return res.status(200).json({ data: list });
+}
+)
+// 댓글 달기
+router.post('/comment/add', async (req, res) => {
+	let user = await User.findOne({ token: req.body.token }); // 댓글 작성할 유저
+	let board = await Board.findOne({ noticeToken: req.body.boardToken });
+
+	board.comment.push({
+		// 따라서 이러한 문법을 복잡한 update query 없이 사용할 수 있습니다.
+		username: user.name,
+		content: req.body.content,
+	});
+	try {
+		await board.save(); // 가져오고 수정한 notice를 다시 save합니다.
+		return res.status(200).json({ message: 'success!' });
+	} catch (e) {
+		return res.status(500).json({ message: 'Save Fail!' });
+	}
+});
 module.exports = router;

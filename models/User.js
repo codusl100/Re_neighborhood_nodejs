@@ -19,6 +19,10 @@ const userSchema = mongoose.Schema({
         minlength: 5,
         required: true,
     },
+    address:{
+        type: String,
+        required: true,
+    }
 })
 
 // 데이터베이스 모델을 정의

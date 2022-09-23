@@ -1,7 +1,8 @@
 # Re_neighborhood_nodejs
 
 ## 📱 제 10회 K-해커톤 앱공모전
-Re:웃주민 (김수민, 나은수, 백채연, 안수아)
+![image](https://user-images.githubusercontent.com/77263479/192007184-f695e940-23c1-41c9-a5f7-2c21e3c2fa31.png)
+대형 폐기물 처리 및 거래 서비스 **Re:웃주민** (김수민, 나은수, 백채연, 안수아)
 
 ## App WireFrame
 ![KakaoTalk_20220924_011759405_01](https://user-images.githubusercontent.com/77263479/192006654-030e6eb9-4b0b-4359-a5f5-048827d46d33.jpg)
